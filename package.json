@@ -3,7 +3,7 @@
   "version": "1.1.0-snapshot.2",
   "description": "A series of services designed to offer the participants an avenue to share end user and transactional information to help promote overall health of the scheme via fraud prevention.",
   "license": "Apache-2.0",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git@github.com:mojaloop/central-fraud-sharing.git"
