@@ -22,7 +22,7 @@ const randomFraud = () => {
   return { id: Uuid(), createdDate, score }
 }
 
-const calculateFraud = (account = '', account2 = '') => {
+const calculateFraud = (account, account2 = '') => {
   const fraud = randomFraud()
   if (account.includes(BLACKLIST) || account2.includes(BLACKLIST)) {
     fraud.score = 100
@@ -34,10 +34,10 @@ const calculateFraud = (account = '', account2 = '') => {
   return fraud
 }
 
-exports.userScore = (request, reply) => {
-  reply(calculateFraud(parseIdentifier(request.payload.identifier).identifier)).code(200)
+exports.userScore = function (request, reply) {
+  return reply.response(calculateFraud(parseIdentifier(request.payload.identifier).identifier)).code(200)
 }
 
-exports.transferScore = (request, reply) => {
-  reply(calculateFraud(request.payload.debits[0].account, request.payload.credits[0].account)).code(200)
+exports.transferScore = function (request, reply) {
+  return reply.response(calculateFraud(request.payload.debits[0].account, request.payload.credits[0].account)).code(200)
 }

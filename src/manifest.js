@@ -2,37 +2,39 @@
 
 const Config = require('./lib/config')
 const Pack = require('../package')
+const ErrorHandling = require('@mojaloop/central-services-error-handling')
+const Boom = require('boom')
 
 module.exports = {
-  connections: [
-    {
-      port: Config.PORT,
-      routes: {
-        validate: require('@mojaloop/central-services-error-handling').validateRoutes()
+  server: {
+    port: Config.PORT,
+    routes: {
+      validate: {
+        options: ErrorHandling.validateRoutes(),
+        failAction: async (request, h, err) => {
+          throw Boom.boomify(err)
+        }
       }
     }
-  ],
-  registrations: [
-    { plugin: 'inert' },
-    { plugin: 'vision' },
-    {
-      plugin: {
-        register: 'hapi-swagger',
+  },
+  register: {
+    plugins: [
+      {plugin: 'inert'},
+      {plugin: 'vision'},
+      {
+        plugin: 'hapi-swagger',
         options: {
           info: {
             'title': 'Central Fraud Sharing API Documentation',
             'version': Pack.version
           }
         }
-      }
-    },
-    { plugin: 'blipp' },
-    { plugin: '@mojaloop/central-services-error-handling' },
-    { plugin: '@mojaloop/central-services-auth' },
-    { plugin: './api' },
-    {
-      plugin: {
-        register: 'good',
+      },
+      {plugin: 'blipp'},
+      {plugin: './api'},
+      {plugin: '@mojaloop/central-services-error-handling'},
+      {
+        plugin: 'good',
         options: {
           ops: {
             interval: 1000
@@ -52,6 +54,7 @@ module.exports = {
               },
               {
                 module: 'good-console',
+                name: 'console',
                 args: [
                   {
                     format: 'YYYY-MM-DD HH:mm:ss.SSS'
@@ -63,6 +66,6 @@ module.exports = {
           }
         }
       }
-    }
-  ]
+    ]
+  }
 }

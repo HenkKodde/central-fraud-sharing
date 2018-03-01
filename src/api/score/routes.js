@@ -9,10 +9,14 @@ module.exports = [
     method: 'POST',
     path: '/score/user',
     handler: Handler.userScore,
-    config: {
+    options: {
       id: 'user_score',
       tags: tags,
       description: 'Score for user',
+      payload: {
+        allow: 'application/json',
+        failAction: 'error'
+      },
       validate: {
         payload: {
           'identifier': Joi.string().regex(/^[A-Za-z0-9]+:[A-Za-z0-9]+/).required().description('Identifier and identifier type concatenated by a colon')
@@ -24,10 +28,14 @@ module.exports = [
     method: 'POST',
     path: '/score/transfer',
     handler: Handler.transferScore,
-    config: {
+    options: {
       id: 'transfer_score',
       tags: tags,
       description: 'Score for transfer',
+      payload: {
+        allow: 'application/json',
+        failAction: 'error'
+      },
       validate: {
         payload: {
           id: Joi.string().uri().required().description('Id of transfer'),
