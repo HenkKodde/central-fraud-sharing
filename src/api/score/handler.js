@@ -23,7 +23,9 @@ const randomFraud = () => {
 }
 
 const calculateFraud = (account, account2 = '') => {
-  const fraud = randomFraud()
+//  const fraud = randomFraud()
+// #163 disabling Fraud Demo.
+  const fraud = 0
   if (account.includes(BLACKLIST) || account2.includes(BLACKLIST)) {
     fraud.score = 100
   } else if (account.includes(HIGH_FRAUD) || account2.includes(HIGH_FRAUD)) {
