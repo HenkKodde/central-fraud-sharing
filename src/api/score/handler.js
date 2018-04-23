@@ -16,11 +16,11 @@ const parseIdentifier = (queryIdentifier) => {
   return { identifier, identifierType }
 }
 
-const randomFraud = () => {
-  const createdDate = new Date()
-  const score = Math.round(createdDate.getMilliseconds() / 10)
-  return { id: Uuid(), createdDate, score }
-}
+// const randomFraud = () => {
+//   const createdDate = new Date()
+//   const score = Math.round(createdDate.getMilliseconds() / 10)
+//   return { id: Uuid(), createdDate, score }
+// }
 
 const calculateFraud = (account, account2 = '') => {
   //  const fraud = randomFraud()
